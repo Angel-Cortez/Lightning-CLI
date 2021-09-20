@@ -23,7 +23,6 @@ const buildHelpers = require('../helpers/build')
 const targz = require('targz')
 const spinner = require('../helpers/spinner')
 const exit = require('../helpers/exit')
-const { metadata } = require('core-js/fn/reflect')
 
 const pack = (buildDir, releasesDir, metadata) => {
   const filename = [metadata.identifier, metadata.version, 'tgz'].join('.').replace(/\s/g, '_')
@@ -62,28 +61,20 @@ module.exports = () => {
   process.env.NODE_ENV = 'production'
   const releasesDir = path.join(process.cwd(), 'releases')
   const tmpDir = path.join(process.cwd(), '/.tmp')
-  let settingsFileName = buildHelpers.getSettingsFileName()
   let packageData
-  let settings
-
   return sequence([
     () => buildHelpers.removeFolder(tmpDir),
     () => buildHelpers.ensureFolderExists(tmpDir),
     () => buildHelpers.copyStaticFolder(tmpDir),
     () => buildHelpers.copySrcFolder(tmpDir),
     () => buildHelpers.copyMetadata(tmpDir),
-    () => buildHelpers.readSettings(settingsFileName).then(result => (settings = result)),
     () =>
       buildHelpers.readMetadata().then(metadata => {
         packageData = metadata
         return metadata
       }),
-    metadata =>
-      (settings.platformSettings.esEnv || 'es6') === 'es6' &&
-      buildHelpers.bundleEs6App(tmpDir, metadata),
-    metadata =>
-      settings.platformSettings.esEnv === 'es5' &&
-      buildHelpers.bundleEs5App(tmpDir, metadata),
+    metadata => buildHelpers.bundleEs6App(tmpDir, metadata),
+    metadata => buildHelpers.bundleEs5App(tmpDir, metadata),
     () => buildHelpers.ensureFolderExists(releasesDir),
     () => buildHelpers.readMetadata(),
     metadata => pack(tmpDir, releasesDir, metadata),
