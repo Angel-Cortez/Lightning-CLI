@@ -77,7 +77,7 @@ const upload = (packageData, user) => {
     .then(({ data }) => {
       // errors also return a 200 status reponse, so we intercept errors here manually
       if (data.error) {
-        exit('api error: ' + UPLOAD_ERRORS[data.error] || data.error)
+        exit('api error: ' + UPLOAD_ERRORS[data.error] || data.error || data)
       } else {
         spinner.succeed()
       }
