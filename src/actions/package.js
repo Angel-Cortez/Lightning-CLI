@@ -61,6 +61,7 @@ module.exports = () => {
   process.env.NODE_ENV = 'production'
   const releasesDir = path.join(process.cwd(), 'releases')
   const tmpDir = path.join(process.cwd(), '/.tmp')
+  let settingsFileName = buildHelpers.getSettingsFileName()
   let packageData
   let settings
 
