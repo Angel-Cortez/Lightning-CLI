@@ -29,6 +29,7 @@ const babelPluginTransFormSpread = require('@babel/plugin-transform-spread')
 const babelPluginTransFormParameters = require('@babel/plugin-transform-parameters')
 const babelPluginClassProperties = require('@babel/plugin-proposal-class-properties')
 const babelPluginInlineJsonImport = require('babel-plugin-inline-json-import')
+const extensions = ['.js', '.ts']
 
 module.exports = (folder, globalName) => {
   const sourcemap =
@@ -84,6 +85,7 @@ module.exports = (folder, globalName) => {
               },
             ],
           ],
+          extensions,
           plugins: [
             babelPluginClassProperties,
             babelPluginTransFormSpread,

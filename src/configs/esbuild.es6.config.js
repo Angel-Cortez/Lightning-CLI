@@ -26,6 +26,7 @@ const dotenv = require('dotenv')
 const babelTypescript = require('@babel/preset-typescript')
 const babelPluginClassProperties = require('@babel/plugin-proposal-class-properties')
 const babelPluginInlineJsonImport = require('babel-plugin-inline-json-import')
+const extensions = ['.js', '.ts']
 
 module.exports = (folder, globalName) => {
   const sourcemap =
@@ -68,6 +69,7 @@ module.exports = (folder, globalName) => {
       babel({
         config: {
           presets: [babelTypescript],
+          extensions,
           plugins: [babelPluginClassProperties, babelPluginInlineJsonImport],
         },
       }),
