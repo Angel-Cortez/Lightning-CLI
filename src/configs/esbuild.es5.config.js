@@ -24,6 +24,7 @@ const os = require('os')
 const path = require('path')
 const dotenv = require('dotenv')
 const babelPresetEnv = require('@babel/preset-env')
+const babelTypescript = require('@babel/preset-typescript')
 const babelPluginTransFormSpread = require('@babel/plugin-transform-spread')
 const babelPluginTransFormParameters = require('@babel/plugin-transform-parameters')
 const babelPluginClassProperties = require('@babel/plugin-proposal-class-properties')
@@ -72,6 +73,7 @@ module.exports = (folder, globalName) => {
           presets: [
             [
               babelPresetEnv,
+              babelTypescript,
               {
                 targets: {
                   chrome: '39',
