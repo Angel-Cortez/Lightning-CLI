@@ -20,12 +20,8 @@
 const buildHelpers = require('../helpers/build')
 const os = require('os')
 const alias = require('../plugins/esbuild-alias')
-const babel = require('../helpers/esbuildbabel')
 const path = require('path')
 const dotenv = require('dotenv')
-const babelTypescript = require('@babel/preset-typescript')
-const babelPluginClassProperties = require('@babel/plugin-proposal-class-properties')
-const babelPluginInlineJsonImport = require('babel-plugin-inline-json-import')
 
 module.exports = (folder, globalName) => {
   const sourcemap =
@@ -52,33 +48,20 @@ module.exports = (folder, globalName) => {
   return {
     plugins: [
       alias([
+        { find: '@', filter: /@\//, replace: path.resolve(process.cwd(), 'src/') },
+        { find: '~', filter: /~\//, replace: path.resolve(process.cwd(), 'node_modules/') },
         {
           find: 'wpe-lightning',
           filter: /^wpe-lightning$/,
           replace: path.join(__dirname, '../alias/wpe-lightning.js'),
         },
-        {
-          find: '@lightningjs/core',
-          filter: /^@lightningjs\/core$/,
-          replace: path.join(__dirname, '../alias/lightningjs-core.js'),
-        },
-        { find: '@', filter: /@\//, replace: path.resolve(process.cwd(), 'src/') },
-        { find: '~', filter: /~\//, replace: path.resolve(process.cwd(), 'node_modules/') },
       ]),
-      babel({
-        config: {
-          presets: [babelTypescript],
-          plugins: [babelPluginClassProperties, babelPluginInlineJsonImport],
-        },
-      }),
     ],
-    minifyWhitespace: minify,
-    minifyIdentifiers: minify,
-    minifySyntax: false,
     entryPoints: [`${process.cwd()}/src/index.js`],
     bundle: true,
     outfile: `${folder}/appBundle.js`,
-    mainFields: ['browser', 'module', 'main'],
+    mainFields: ['module', 'main', 'browser'],
+    minifyWhitespace: true,
     sourcemap,
     format: 'iife',
     define: defined,
