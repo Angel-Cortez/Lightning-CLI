@@ -67,7 +67,7 @@ module.exports = (folder, globalName) => {
       ]),
       babel({
         config: {
-          presets: [babelTypescript],
+          // presets: [babelTypescript],
           plugins: [babelPluginClassProperties, babelPluginInlineJsonImport],
         },
       }),
