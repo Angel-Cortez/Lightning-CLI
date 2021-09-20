@@ -71,9 +71,9 @@ module.exports = (folder, globalName) => {
       babel({
         config: {
           presets: [
+            babelTypescript,
             [
               babelPresetEnv,
-              babelTypescript,
               {
                 targets: {
                   chrome: '39',
