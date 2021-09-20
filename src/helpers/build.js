@@ -140,6 +140,7 @@ const readJson = fileName => {
 }
 
 const bundleEs6App = (folder, metadata, options = {}) => {
+  console.log("Test LNG_BUNDLER: " + process.env.LNG_BUNDLER)
   if (process.env.LNG_BUNDLER === 'esbuild') {
     return buildAppEsBuild(folder, metadata, 'es6', options)
   } else {
