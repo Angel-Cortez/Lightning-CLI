@@ -68,6 +68,30 @@ module.exports = (folder, globalName) => {
           replace: path.join(__dirname, '../alias/wpe-lightning.js'),
         },
       ]),
+      babel({
+        config: {
+          presets: [
+            [
+              babelPresetEnv,
+              babelTypescript,
+              {
+                targets: {
+                  chrome: '39',
+                },
+                debug: false,
+                useBuiltIns: 'entry',
+                corejs: '^3.6.5',
+              },
+            ],
+          ],
+          plugins: [
+            babelPluginClassProperties,
+            babelPluginTransFormSpread,
+            babelPluginTransFormParameters,
+            babelPluginInlineJsonImport,
+          ],
+        },
+      }),
     ],
     minifyWhitespace: minify,
     minifyIdentifiers: minify,
