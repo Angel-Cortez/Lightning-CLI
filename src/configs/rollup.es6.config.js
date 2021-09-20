@@ -33,7 +33,6 @@ const dotenv = require('dotenv').config()
 const minify = require('rollup-plugin-terser').terser
 const license = require('rollup-plugin-license')
 const babelPresetTypescript = require('@babel/preset-typescript')
-const babelPluginTransformModulesCommonJS = require('@babel/plugin-transform-modules-commonjs')
 
 const os = require('os')
 const extensions = ['.js', '.ts']
@@ -65,7 +64,7 @@ module.exports = {
       presets: [[babelPresetTypescript]],
       extensions,
       babelHelpers: 'bundled',
-      plugins: [babelPluginClassProperties, babelPluginTransformModulesCommonJS],
+      plugins: [babelPluginClassProperties],
     }),
     (process.env.LNG_BUILD_MINIFY === 'true' || process.env.NODE_ENV === 'production') &&
       minify({ keep_fnames: true }),
