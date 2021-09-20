@@ -71,7 +71,7 @@ module.exports = (folder, globalName) => {
       babel({
         config: {
           presets: [
-            // babelTypescript,
+            babelTypescript,
             [
               babelPresetEnv,
               {
