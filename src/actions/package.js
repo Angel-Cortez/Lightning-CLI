@@ -62,6 +62,8 @@ module.exports = () => {
   const releasesDir = path.join(process.cwd(), 'releases')
   const tmpDir = path.join(process.cwd(), '/.tmp')
   let packageData
+  let settings
+
   return sequence([
     () => buildHelpers.removeFolder(tmpDir),
     () => buildHelpers.ensureFolderExists(tmpDir),
@@ -73,8 +75,13 @@ module.exports = () => {
         packageData = metadata
         return metadata
       }),
-    metadata => buildHelpers.bundleEs6App(tmpDir, metadata),
-    metadata => buildHelpers.bundleEs5App(tmpDir, metadata),
+    () => buildHelpers.readSettings(settingsFileName).then(result => (settings = result)),
+    () =>
+      (settings.platformSettings.esEnv || 'es6') === 'es6' &&
+      buildHelpers.bundleEs6App(tmpDir, metadata),
+    () =>
+      settings.platformSettings.esEnv === 'es5' &&
+      buildHelpers.bundleEs5App(tmpDir, metadata),
     () => buildHelpers.ensureFolderExists(releasesDir),
     () => buildHelpers.readMetadata(),
     metadata => pack(tmpDir, releasesDir, metadata),
