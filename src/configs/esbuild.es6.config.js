@@ -62,7 +62,7 @@ module.exports = (folder, globalName) => {
           replace: path.join(__dirname, '../alias/lightningjs-core.js'),
         },
         { find: '@', filter: /@\//, replace: path.resolve(process.cwd(), 'src/') },
-        { find: '~', filter: /~\//, replace: path.resolve(process.cwd(), 'node_modules/') },
+        // { find: '~', filter: /~\//, replace: path.resolve(process.cwd(), 'node_modules/') },
       ]),
       babel({
         config: {
