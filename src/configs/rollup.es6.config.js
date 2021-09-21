@@ -59,7 +59,7 @@ module.exports = {
       },
     }),
     resolve({ extensions, mainFields: ['module', 'main', 'browser'] }),
-    commonjs({ sourceMap: false }),
+    commonjs({ sourceMap: false, exclude: 'node_modules', ignoreGlobal: true }),
     babel({
       presets: [[babelPresetTypescript]],
       extensions,
