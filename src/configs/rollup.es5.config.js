@@ -37,6 +37,8 @@ const minify = require('rollup-plugin-terser').terser
 const license = require('rollup-plugin-license')
 const os = require('os')
 
+const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json']
+
 module.exports = {
   plugins: [
     json(),
@@ -58,9 +60,10 @@ module.exports = {
         '~': path.resolve(process.cwd(), 'node_modules/'),
       },
     }),
-    resolve({ mainFields: ['module', 'main', 'browser'] }),
+    resolve({ extensions, mainFields: ['module', 'main', 'browser'] }),
     commonjs({ sourceMap: false }),
     babel({
+      extensions,
       presets: [
         [
           babelPresentEnv,
