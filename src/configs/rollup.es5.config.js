@@ -40,6 +40,11 @@ const os = require('os')
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json']
 
 module.exports = {
+  onwarn(warning, warn) {
+    if (warning.code !== 'CIRCULAR_DEPENDENCY') {
+      warn(warning)
+    }
+  },
   plugins: [
     json(),
     image(),
